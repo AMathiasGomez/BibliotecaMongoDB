@@ -1,0 +1,106 @@
+[
+  [
+    {
+      "_id": "autor_001",
+      "nombre": "Gabriel García Márquez",
+      "nacionalidad": "Colombiana",
+      "fecha_nacimiento": 1927,
+      "generos": ["Realismo mágico", "Novela"]
+    },
+    {
+      "_id": "autor_002",
+      "nombre": "Isabel Allende",
+      "nacionalidad": "Chilena",
+      "fecha_nacimiento": 1942,
+      "generos": ["Realismo mágico", "Ficción histórica"]
+    },
+    {
+      "_id": "autor_003",
+      "nombre": "George Orwell",
+      "nacionalidad": "Británica",
+      "fecha_nacimiento": 1903,
+      "generos": ["Distopía", "Ensayo político"]
+    }
+  ],
+
+  [
+    {
+      "_id": "libro_001",
+      "titulo": "Cien años de soledad",
+      "autor_id": "autor_001",
+      "año_publicado": 1967,
+      "copies_total": 4,
+      "copias_disponibles": 2,
+      "generos": "Realismo mágico"
+    },
+    {
+      "_id": "libro_002",
+      "titulo": "El amor en los tiempos del cólera",
+      "autor_id": "autor_001",
+      "año_publicado": 1985,
+      "copies_total": 3,
+      "copias_disponibles": 3,
+      "generos": "Novela"
+    },
+    {
+      "_id": "libro_003",
+      "titulo": "La casa de los espíritus",
+      "autor_id": "autor_002",
+      "año_publicado": 1982,
+      "copies_total": 2,
+      "copias_disponibles": 1,
+      "generos": "Ficción histórica"
+    },
+    {
+      "_id": "libro_004",
+      "titulo": "1984",
+      "autor_id": "autor_003",
+      "año_publicado": 1949,
+      "copies_total": 5,
+      "copias_disponibles": 4,
+      "generos": "Distopía"
+    }
+  ],
+
+  [
+  {
+    "_id": "prestamo_001",
+    "libro_id": "libro_001",
+    "usuario": {
+      "nombre": "Alan Ramirez",
+      "usuario_id": "M-1001",
+      "email": "alan.ramirez@correo.com"
+    },
+    "prestamo_fecha": "2026-06-01",
+    "fecha_limite": "2026-06-15",
+    "devolucion_fecha": null,
+    "estado": "activo"
+  },
+  {
+    "_id": "prestamo_002",
+    "libro_id": "libro_003",
+    "usuario": {
+      "nombre": "Camila Torres",
+      "usuario_id": "M-1002",
+      "email": "camila.torres@correo.com"
+    },
+    "prestamo_fecha": "2026-05-20",
+    "fecha_limite": "2026-06-03",
+    "devolucion_fecha": "2026-06-01",
+    "estado": "devuelto"
+  },
+  {
+    "_id": "prestamo_003",
+    "libro_id": "libro_004",
+    "usuario": {
+      "nombre": "Juan Pérez",
+      "usuario_id": "M-1003",
+      "email": "juan.perez@correo.com"
+    },
+    "prestamo_fecha": "2026-06-10",
+    "fecha_limite": "2026-06-24",
+    "devolucion_fecha": null,
+    "estado": "activo"
+  }
+]
+]
