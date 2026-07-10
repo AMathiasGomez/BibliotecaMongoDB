@@ -1,0 +1,37 @@
+
+GET http://localhost:3000/usuarios
+
+###
+
+
+GET http://localhost:3000/usuarios/6ad40482420b37b152b7e9bf
+
+
+POST http://localhost:3000/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "Laura",
+    "correo": "laura@soy.sena.edu.co",
+    "edad": 22,
+    "telefono": "3105556677",
+    "intereses": [
+        "Programación",
+        "MongoDB"
+    ]
+}
+
+###
+
+PUT http://localhost:3000/usuarios/6ad40482420b37b152b7e9bf
+Content-Type: application/json
+
+{
+    "edad": 26,
+    "telefono": "3201234567"
+}
+
+
+
+
+DELETE http://localhost:3000/usuarios/6ad40482420b37b152b7e9bf 
