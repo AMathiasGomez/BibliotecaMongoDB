@@ -1,14 +1,21 @@
-const express = require("express");
+const express = require('express');
 const mongoose = require("mongoose");
-const { ObjectId } = require("mongodb");
-require("dotenv").config();
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+const middlewareRevision = (req, res, next) => {
+    const horaActual = new Date().toLocaleDateString();
+    console.log(`[${horaActual}] Peticion entrante: ${req.method} ${req.url}`);
+    next(); // <-- esto faltaba: sin next(), la petición nunca sigue a la ruta
+}
+app.use(middlewareRevision);
 
+const PORT = process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
@@ -18,137 +25,21 @@ mongoose.connect(process.env.MONGO_URI)
     console.error("Error al conectar MongoDB:", error);
 });
 
-
 app.get("/", (req, res) => {
     res.json({
         mensaje: "Servidor funcionando correctamente"
     });
 });
 
+const healthRoutes = require('./src/routes/salud');
+app.use('/api/v1', healthRoutes);
 
-app.get("/usuarios", async (req, res) => {
-    try {
-        const usuarios = await mongoose.connection.db
-            .collection("usuarios")
-            .find()
-            .toArray();
-        res.json(usuarios);
-    } catch (error) {
-        res.status(500).json({
-            error: error.message
-        });
-    }
-});
+const usuariosRoutes = require('./src/routes/usuarios.routes');
+app.use('/api/v1', usuariosRoutes);
 
-
-app.get("/usuarios/:id", async (req, res) => {
-
-    try {
-        const usuario = await mongoose.connection.db
-            .collection("usuarios")
-            .findOne({
-                _id: new ObjectId(req.params.id)
-            });
-        if (!usuario) {
-            return res.status(404).json({
-                mensaje: "Usuario no encontrado"
-            });
-        }
-        res.json(usuario);
-    } catch (error) {
-        res.status(500).json({
-            error: error.message
-        });
-    }
-});
-
-
-app.post("/usuarios", async (req, res) => {
-    try {
-        const nuevoUsuario = req.body;
-        const resultado = await mongoose.connection.db
-            .collection("usuarios")
-            .insertOne(nuevoUsuario);
-        res.status(201).json({
-            mensaje: "Usuario creado correctamente",
-            id_generado: resultado.insertedId,
-            datosGuardados: nuevoUsuario
-        });
-    } catch (error) {
-        res.status(500).json({
-            error: error.message
-        });
-    }
-});
-
-
-app.put("/usuarios/:id", async (req, res) => {
-    try {
-        const resultado = await mongoose.connection.db
-            .collection("usuarios")
-            .updateOne(
-                {
-                    _id: new ObjectId(req.params.id)
-                },
-                {
-                    $set: req.body
-                }
-            );
-        if (resultado.matchedCount === 0) {
-            return res.status(404).json({
-                mensaje: "Usuario no encontrado"
-            });
-        }
-        res.json({
-            mensaje: "Usuario actualizado correctamente",
-            modificaciones: resultado.modifiedCount
-        });
-    } catch (error) {
-        res.status(500).json({
-            error: error.message
-        });
-    }
-});
-
-
-app.delete("/usuarios/:id", async (req, res) => {
-
-    try {
-        const resultado = await mongoose.connection.db
-            .collection("usuarios")
-            .deleteOne({
-                _id: new ObjectId(req.params.id)
-            });
-        if (resultado.deletedCount === 0) {
-            return res.status(404).json({
-                mensaje: "Usuario no encontrado"
-            });
-        }
-        res.json({
-            mensaje: "Usuario eliminado correctamente"
-        });
-    } catch (error) {
-        res.status(500).json({
-            error: error.message
-        });
-    }
-});
-
-
-app.get("/colecciones", async (req, res) => {
-    try {
-        const colecciones = await mongoose.connection.db
-            .listCollections()
-            .toArray();
-        res.json(colecciones);
-    } catch (error) {
-        res.status(500).json({
-            error: error.message
-        });
-    }
-});
-
+const estadoRoutes = require('./src/routes/estado.routes');
+app.use('/api/v1', estadoRoutes);
 
 app.listen(PORT, () => {
-    console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

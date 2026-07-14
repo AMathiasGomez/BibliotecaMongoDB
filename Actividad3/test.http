@@ -1,37 +1,47 @@
-
-GET http://localhost:3000/usuarios
+GET http://localhost:3000/api/v1/usuarios
 
 ###
+GET http://localhost:3000/api/v1/usuarios/6ad40482420b37b152b7e9bf
 
-
-GET http://localhost:3000/usuarios/6ad40482420b37b152b7e9bf
-
-
-POST http://localhost:3000/usuarios
+###
+POST http://localhost:3000/api/v1/usuarios
 Content-Type: application/json
 
 {
-    "nombre": "Laura",
-    "correo": "laura@soy.sena.edu.co",
-    "edad": 22,
-    "telefono": "3105556677",
-    "intereses": [
-        "Programación",
-        "MongoDB"
-    ]
+    "nombre": "Laura Gómez",
+    "email": "laura@soy.sena.edu.co",
+    "rol": "miembro",
+    "perfil": {
+        "telefono": "3105556677",
+        "direccion": "Calle 45 #12-10, Bogotá"
+    },
+    "historial_contacto": []
 }
 
 ###
-
-PUT http://localhost:3000/usuarios/6ad40482420b37b152b7e9bf
+PUT http://localhost:3000/api/v1/usuarios/6ad40482420b37b152b7e9bf
 Content-Type: application/json
 
 {
-    "edad": 26,
-    "telefono": "3201234567"
+    "perfil.telefono": "3201234567",
+    "perfil.direccion": "Cra 20 #8-15, Medellín"
 }
 
+###
+DELETE http://localhost:3000/api/v1/usuarios/6ad40482420b37b152b7e9bf
 
+###
+PATCH http://localhost:3000/api/v1/actualizar-estado/PON_UN_ID_REAL_AQUI
+Content-Type: application/json
 
+{
+    "estado": "devuelto"
+}
 
-DELETE http://localhost:3000/usuarios/6ad40482420b37b152b7e9bf 
+####
+PATCH http://localhost:3000/api/v1/actualizar-estado/PON_UN_ID_YA_FINALIZADO
+Content-Type: application/json
+
+{
+    "estado": "activo"
+}
