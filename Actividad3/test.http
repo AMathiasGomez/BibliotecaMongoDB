@@ -45,3 +45,12 @@ Content-Type: application/json
 {
     "estado": "activo"
 }
+
+###
+POST http://localhost:3000/api/v1/usuarios
+Content-Type: application/json
+
+{
+    "nombre": "Prueba Sin Password",
+    "email": "prueba@correo.com"
+}

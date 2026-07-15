@@ -11,7 +11,7 @@ app.use(express.json());
 const middlewareRevision = (req, res, next) => {
     const horaActual = new Date().toLocaleDateString();
     console.log(`[${horaActual}] Peticion entrante: ${req.method} ${req.url}`);
-    next(); // <-- esto faltaba: sin next(), la petición nunca sigue a la ruta
+    next();
 }
 app.use(middlewareRevision);
 
@@ -31,11 +31,8 @@ app.get("/", (req, res) => {
     });
 });
 
-const healthRoutes = require('./src/routes/salud');
-app.use('/api/v1', healthRoutes);
-
 const usuariosRoutes = require('./src/routes/usuarios.routes');
-app.use('/api/v1', usuariosRoutes);
+app.use('/api/v1/usuarios', usuariosRoutes);
 
 const estadoRoutes = require('./src/routes/estado.routes');
 app.use('/api/v1', estadoRoutes);
