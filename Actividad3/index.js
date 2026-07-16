@@ -31,10 +31,22 @@ app.get("/", (req, res) => {
     });
 });
 
-const usuariosRoutes = require('./src/routes/usuarios.routes');
+const healthRoutes = require('./routes/salud');
+app.use('/api/v1', healthRoutes);
+
+const usuariosRoutes = require('./routes/usuarios.routes');
 app.use('/api/v1/usuarios', usuariosRoutes);
 
-const estadoRoutes = require('./src/routes/estado.routes');
+const autoresRoutes = require('./routes/autores.routes');
+app.use('/api/v1/autores', autoresRoutes);
+
+const librosRoutes = require('./routes/libros.routes');
+app.use('/api/v1/libros', librosRoutes);
+
+const prestamosRoutes = require('./routes/prestamos.routes');
+app.use('/api/v1/prestamos', prestamosRoutes);
+
+const estadoRoutes = require('./routes/estado.routes');
 app.use('/api/v1', estadoRoutes);
 
 app.listen(PORT, () => {
